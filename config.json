@@ -1,0 +1,38 @@
+{
+  "Usernames": {
+    "Prefix": [
+      "hail",
+      "satan"
+    ],
+    "Root": [
+      "we",
+      "love",
+      "you",
+      "muchskeptical"
+    ],
+    "Suffix": [
+      "i",
+      "honestly",
+      "dont",
+      "know",
+      "what",
+      "to",
+      "say",
+      "here"
+    ]
+  },
+  "Password": {
+    "UseStaticPassword": false,
+    "StaticPassword": "Abcd1234!"
+  },
+  "TutorialSettings": {
+	"Tos": false,
+	"Level2": false,
+	"Level5": false,
+	"Latitude": 40,
+	"Longitude": -75,
+	"HashKey": "pijhfdjihnmrdjfnmgtrkmygrkv,,,,fs"
+  },
+  "ProxyFile": "doesnt-exist.txt? Dont worry we pick up some from the INTERNET!"
+  "CaptchaKey": "q5rijufewdhsrfpdi;hgbjvdkbndfcbhjkdkvkkvkmbkl"
+}
