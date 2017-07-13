@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Entropy.Captcha;
 using Entropy.Proxy.Pool;
+using Entropy.Proxy.Schema;
 using Newtonsoft.Json;
 using Troschuetz.Random;
 
@@ -87,35 +88,39 @@ namespace Entropy
             {
                 tasks.Add(new Task(async () =>
                 {
-                    var username = random.Choice(config.Usernames.Prefix) + random.Choice(config.Usernames.Root) +
-                                   random.Choice(config.Usernames.Suffix);
-
-                    var password = config.Password.UseStaticPassword ? config.Password.StaticPassword : String.Empty;
-
                     var proxy = proxyPool.NextProxy();
+                    ActiveProxies++;
+                    for (var x = 0; x < 5; x++)
+                    {
+                        var username = random.Choice(config.Usernames.Prefix) + random.Choice(config.Usernames.Root) +
+                                       random.Choice(config.Usernames.Suffix);
+
+                        var password = config.Password.UseStaticPassword ? config.Password.StaticPassword : String.Empty;
                     
-                    var ui = new AccountCreationOptions
-                    {
-                        CaptchaService = captcha,
-                        Dob = $"{random.Next(1970, 2000)}-{FormatPTCNumber(random.Next(1, 12))}-{FormatPTCNumber(random.Next(1, 27))}",
-                        Proxy = proxy.ToWebProxy(),
-                        Username = username,
-                        Password = password
-                    };
+                        var ui = new AccountCreationOptions
+                        {
+                            CaptchaService = captcha,
+                            Dob = $"{random.Next(1970, 2000)}-{FormatPTCNumber(random.Next(1, 12))}-{FormatPTCNumber(random.Next(1, 27))}",
+                            Proxy = proxy.ToWebProxy(),
+                            Username = username,
+                            Password = password
+                        };
 
-                    var res = await Creator.Create(ui);
+                        var res = await Creator.Create(ui);
 
-                    if (res.Successful)
-                    {
-                        Created++;
-                        UpdateStats();
-                        await Creator.HandleAccountAfterCreation(config, res);
+                        if (res.Successful)
+                        {
+                            Created++;
+                            UpdateStats();
+                            await Creator.HandleAccountAfterCreation(config, res);
+                        }
+                        else
+                        {
+                            Failed++;
+                            UpdateStats();
+                        }
                     }
-                    else
-                    {
-                        Failed++;
-                        UpdateStats();
-                    }
+                    BenchedProxies++;
                 }));
             }
             
