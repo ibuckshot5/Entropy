@@ -4,6 +4,6 @@ namespace Entropy.Captcha
 {
     public interface ICaptchaService
     {
-        Task<string> Solve(string sitekey = "6LdpuiYTAAAAAL6y9JNUZzJ7cF3F8MQGGKko1bCy&co=aHR0cHM6Ly9jbHViLnBva2Vtb24uY29tOjQ0Mw..", string url = "https://club.pokemon.com/us/pokemon-trainer-club/parents/sign-up");
+        Task<string> Solve(string sitekey = "6LdpuiYTAAAAAL6y9JNUZzJ7cF3F8MQGGKko1bCy", string url = "https://club.pokemon.com/us/pokemon-trainer-club/parents/sign-up");
     }
 }
